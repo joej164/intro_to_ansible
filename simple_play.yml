@@ -27,4 +27,5 @@
     - name: looping over a list
       debug:
         msg: 'This line is: {{ item }}'
-      loop: shell_out.stdout_lines
+      loop: "{{ shell_out.stdout_lines }}"
+
