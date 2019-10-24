@@ -1,0 +1,22 @@
+- hosts: localhost
+  tasks:
+    - name: can i talk to myself
+      ping: 
+      register: out
+
+    - name: output
+      debug:
+        var: out
+
+    - name: Assert that output exists
+      assert:
+        that: 
+          - "out is defined"
+
+    - name: A few more assertions
+      assert:
+        that:
+          - 1 == 1
+          - 20 < 40
+          - out.ping == "pong"
+
