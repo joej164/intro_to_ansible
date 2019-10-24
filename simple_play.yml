@@ -1,0 +1,30 @@
+- hosts: localhost
+  tasks:
+    - name: can i talk to myself
+      ping: 
+      register: out
+    
+    - name: output
+      debug:
+        var: out
+
+    - name: out_local_facts
+      debug:
+        var: ansible_facts
+
+    - name: run a command
+      shell: "ls -al"
+      register: shell_out
+
+    - name: out shell
+      debug:
+        var: shell_out
+
+    - name: using variables
+      debug:
+        msg: 'The command I just ran is: "{{ shell_out.cmd }}"'
+
+    - name: looping over a list
+      debug:
+        msg: 'This line is: {{ item }}'
+      loop: shell_out.stdout_lines
