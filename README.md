@@ -26,7 +26,7 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
 * Steps to set up the Centos 7 Minimal VM
   * Virtual Box Setup
     * Download Centos7 Minimal ISO from http://isoredirect.centos.org/centos/7/isos/x86_64/
-      * Specific File: xhttp://mirror.tocici.com/centos/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso
+      * Specific File: http://mirror.tocici.com/centos/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso
     * Install VM from CentOS 7.7 minimal ISO
       * Create a new VM
       * Attach the ISO to the new VM
@@ -44,9 +44,9 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
     * Do the install and reboot the box
   * Centos OS Configuration
     * Disable DNS lookups when using SSH to connect to the server
-        update /etc/ssh/sshd_config
-          `set UseDNS = no`
-          `set GSSAPIAuthentiction = no`
+        * update /etc/ssh/sshd_config
+          ```set UseDNS = no
+          set GSSAPIAuthentiction = no```
     * By default, Centos 7 Minimal does not have SSH enabled, enable it
         * Run the command `systemctl enabled sshd`
   * Ansible Host Configuration
