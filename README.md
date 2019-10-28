@@ -45,8 +45,10 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
   * Centos OS Configuration
     * Disable DNS lookups when using SSH to connect to the server
         * update /etc/ssh/sshd_config
-          ```set UseDNS = no
-          set GSSAPIAuthentiction = no```
+          ```
+          set UseDNS = no
+          set GSSAPIAuthentiction = no
+          ```
     * By default, Centos 7 Minimal does not have SSH enabled, enable it
         * Run the command `systemctl enabled sshd`
   * Ansible Host Configuration
