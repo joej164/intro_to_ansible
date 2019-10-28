@@ -1,0 +1,15 @@
+install_python36:
+    hosts:
+        192.168.56.10
+
+compile_python38:
+    hosts:
+        192.168.56.11
+
+all:
+    vars:
+        ansible_connection: ssh
+        ansible_user: ansible 
+        ansible_ssh_pass: <TBD> 
+        ansible_sudo_pass: <TBD> 
+

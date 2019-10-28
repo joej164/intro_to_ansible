@@ -1,0 +1,66 @@
+# This is an ansible script of the instructions from this site   https://tecadmin.net/install-python-3-8-centos/
+#
+# Yaml file to install python3.8, clean up, and set up a symlink for `python3`
+#
+- hosts: all
+  gather_facts: no
+  tasks:
+    # Checking to see if I can talk to the box
+    - name: can i talk to myself
+      ping: 
+      register: out
+    
+    # How to do print statements in ansible, not required
+    - name: printing the results of the ping command 
+      debug:
+        var: out
+   
+    - name: update yum and all default packages
+      yum:
+        name: "*"
+        state: latest
+      become: yes
+
+    - name: install packages required to compile python 
+      yum:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - gcc
+          - openssl-devel
+          - bzip2-devel
+          - libffi-devel
+      become: yes 
+
+    - name: Download an unarchive the python files
+      unarchive:
+        src: https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
+        dest: /home/ansible
+        remote_src: yes
+
+    - name: enable optimizations in python3.8
+      command: ./configure --enable-optimizations
+      args:
+        chdir: "/home/ansible/Python-3.8.0"
+      become: yes
+      
+    - name: make python3.8
+      command: make altinstall 
+      args:
+        chdir: "/home/ansible/Python-3.8.0"
+      become: yes
+
+    - name: Cleanup downloaded files
+      file:
+        state: absent
+        path: "/home/ansible/Python-3.8.0/"
+      become: yes
+
+    - name: Create a python3 symlink
+      file:
+        src: "/usr/local/bin/python3.8"
+        dest: "/usr/local/bin/python3"
+        state: link
+      become: yes
+

@@ -1,0 +1,73 @@
+# Yaml file to install python3, clone a repo, and install dependencies
+- hosts: all
+  gather_facts: no
+  tasks:
+    # Checking to see if I can talk to the box
+    - name: can i talk to myself
+      ping: 
+      register: out
+    
+    # How to do print statements in ansible
+    - name: output results of the ping command 
+      debug:
+        var: out
+    
+    # Here's how to do some testing, not really required
+    - name: stop if i couldn't connect
+      assert:
+        that: "{{ out.failed }} == false"
+
+    - name: update yum and all packages
+      yum:
+        name: "*"
+        state: latest
+      become: yes
+
+    # I like vim rather than vi
+    - name: install vim
+      yum:
+        name: vim
+        state: latest
+      become: yes
+
+    - name: install epel release from an rpm
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+        state: latest
+      become: yes
+
+    # Setuptools needs to be installed for the python interpreter running Ansible to use the pip module
+    - name: install required OS packages so the rest of the process will work
+      yum:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - python-setuptools
+          - python3
+          - python3-pip
+          - python3-devel
+          - git
+          - "@Development Tools"
+      become: yes 
+
+    - name: install packages for general python3 development 
+      pip:
+        name: 
+          - pipenv
+          - flake8
+          - pytest
+          - pytest-cov
+        executable: pip3
+        extra_args: --user
+    
+    - name: install tinydb-sample-blog from git repo
+      git:
+       repo: https://github.com/mikeckennedy/tinydb-sample-blog.git
+       dest: /home/ansible/tinydb-sample-blog
+
+    - name: setup a virtual environment and install required packages
+      command: ~/.local/bin/pipenv install -r src/requirements.txt
+      args:
+        chdir: /home/ansible/tinydb-sample-blog
+
