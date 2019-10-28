@@ -57,9 +57,10 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
       * For linux, look up your specific distro to find out 
     * Add the ssh fingerprint to local hosts file by doing `ssh <host ip>` and typing `yes` when prompted
 
-* Easiest way to install Ansible
+* Easiest way to install Ansible (for Python Developers)
     * Doesn't work on windows, may work in WSL or WSL2.  Linux or Mac only.
-    * Install python3 ( tested with Python3.7 )
+    * Can also install from OS packages (apt-get or yum)
+    * Install python3 ( tested with Python3.7.4 on Mac )
     * Install pip3
     * Install pipenv
     * Create a directory that you'll be working in
