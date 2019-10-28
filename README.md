@@ -50,7 +50,7 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
           set GSSAPIAuthentiction = no
           ```
     * By default, Centos 7 Minimal does not have SSH enabled, enable it
-        * Run the command `systemctl enabled sshd`
+        * Run the command `systemctl enable sshd`
   * Ansible Host Configuration
     * Install `sshpass` on Ansible host so Ansible can use ssh passwords to log in
       * In my case it was a Mac, so I had to `brew install sshpass`
