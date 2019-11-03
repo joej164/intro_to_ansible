@@ -71,4 +71,5 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
 * Setting up local YUM Repo
   * Created a VM with a virtual drive with 100GB in size
   * Set up with static IP using process above ( 1st is NAT, 2nd is host only)
+  * Picked IP Address `192.168.56.100`
   * https://phoenixnap.com/kb/create-local-yum-repository-centos
