@@ -19,7 +19,7 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
 
 * `compile_python38_on_centos_minimal.yml`
   * This play installs python3.8 a Centos 7 Minimal install, sets up a symlink, and cleans up
-  * Run with the command `ansible-playbook -i hosts -l install_python36 compile_python38_on_centos_minimal.yml`
+  * Run with the command `ansible-playbook -i hosts -l compile_python38 compile_python38_on_centos_minimal.yml`
   * Requires a Centos 7 Minimal VM at the IP of `192.168.56.11` with ssh enabled and credentials as defined in the hosts file
 
 
