@@ -10,6 +10,6 @@ all:
     vars:
         ansible_connection: ssh
         ansible_user: ansible 
-        ansible_ssh_pass: <TBD> 
+        ansible_ssh_pass: <TBD>
         ansible_sudo_pass: <TBD> 
 

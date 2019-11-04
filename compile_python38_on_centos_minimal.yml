@@ -14,11 +14,29 @@
     - name: printing the results of the ping command 
       debug:
         var: out
-   
-    - name: update yum and all default packages
-      yum:
-        name: "*"
-        state: latest
+
+    - name: find all files with the repo suffix to delete
+      find:
+        paths: /etc/yum.repos.d
+        patterns: "*.repo"
+      register: to_delete
+
+    - name: delete all repo files
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ to_delete.files }}" 
+      become: yes
+
+    - name: create file so yum points at local repo
+      copy:
+        dest: "/etc/yum.repos.d/remote.repo"
+        content: |
+          [remote]
+          name=YUM Local
+          baseurl=http://192.168.56.99
+          enable=1
+          gpgcheck=0
       become: yes
 
     - name: install packages required to compile python 
@@ -35,7 +53,7 @@
 
     - name: Download an unarchive the python files
       unarchive:
-        src: https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
+        src: http://192.168.56.99/Python-3.8.0.tgz
         dest: /home/ansible
         remote_src: yes
 

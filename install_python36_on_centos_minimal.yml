@@ -17,22 +17,34 @@
       assert:
         that: "{{ out.failed }} == false"
 
-    - name: update yum and all packages
-      yum:
-        name: "*"
-        state: latest
+    - name: find all files with the repo suffix to delete
+      find:
+        paths: /etc/yum.repos.d
+        patterns: "*.repo"
+      register: to_delete
+
+    - name: delete all repo files
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ to_delete.files }}" 
+      become: yes
+
+    - name: create file so yum points at local repo
+      copy:
+        dest: "/etc/yum.repos.d/remote.repo"
+        content: |
+          [remote]
+          name=YUM Local
+          baseurl=http://192.168.56.99
+          enable=1
+          gpgcheck=0
       become: yes
 
     # I like vim rather than vi
     - name: install vim
       yum:
         name: vim
-        state: latest
-      become: yes
-
-    - name: install epel release from an rpm
-      yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
         state: latest
       become: yes
 
@@ -43,12 +55,13 @@
         state: present
       vars:
         packages:
+          - gcc
           - python-setuptools
           - python3
           - python3-pip
           - python3-devel
           - git
-          - "@Development Tools"
+          - unzip
       become: yes 
 
     - name: install packages for general python3 development 
@@ -60,14 +73,15 @@
           - pytest-cov
         executable: pip3
         extra_args: --user
+   
+    - name: install tinydb-sample-blog from zip file
+      unarchive:
+        src: http://192.168.56.99/tinydb-sample-blog-master.zip
+        dest: /home/ansible
+        remote_src: yes
     
-    - name: install tinydb-sample-blog from git repo
-      git:
-       repo: https://github.com/mikeckennedy/tinydb-sample-blog.git
-       dest: /home/ansible/tinydb-sample-blog
-
     - name: setup a virtual environment and install required packages
       command: ~/.local/bin/pipenv install -r src/requirements.txt
       args:
-        chdir: /home/ansible/tinydb-sample-blog
+        chdir: /home/ansible/tinydb-sample-blog-master
 
