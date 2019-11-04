@@ -19,7 +19,7 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
 
 * `compile_python38_on_centos_minimal.yml`
   * This play installs python3.8 a Centos 7 Minimal install, sets up a symlink, and cleans up
-  * Run with the command `ansible-playbook -i hosts -l install_python36 compile_python38_on_centos_minimal.yml`
+  * Run with the command `ansible-playbook -i hosts -l compile_python38 compile_python38_on_centos_minimal.yml`
   * Requires a Centos 7 Minimal VM at the IP of `192.168.56.11` with ssh enabled and credentials as defined in the hosts file
 
 
@@ -68,3 +68,10 @@ This repo contains code samples from my "Intro to Ansible for Python Developers"
     * Run `pipenv shell` to start your Virtual Environment
     * Run `ansible --version` to see what version of Ansible is installed
 
+* Setting up local YUM Repo
+  * Created a VM with a virtual drive with 100GB in size
+  * Set up with static IP using process above ( 1st is NAT, 2nd is host only)
+  * Picked IP Address `192.168.56.99`
+  * WARNING: DON'T USE `.100`.  That's the virtualbox host only DHCP server and it messes up everything
+  * https://phoenixnap.com/kb/create-local-yum-repository-centos
+  
